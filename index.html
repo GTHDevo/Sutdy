@@ -3,241 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FocusYKS | Pro Max</title>
+<title>FocusYKS | Fixed Stats</title>
 <style>
 :root{
---bg1:#F5FBE6; --bg2:#215E61; --text:#F5FBE6;
---accent:#FE7F2D; --frame:#FE7F2D;
+--bg1:#F5FBE6; --bg2:#215E61; --text:#215E61; --accent:#FE7F2D; --frame:#FE7F2D;
 --led:linear-gradient(90deg,#ff004c,#00fff7,#7c7cff,#ff004c);
 }
-
 body{
 margin:0; height:100vh; font-family:'Segoe UI', sans-serif;
 background:linear-gradient(160deg,var(--bg1),var(--bg2));
 color:var(--text); display:flex; flex-direction:column;
 overflow:hidden; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* SPOTIFY BAR */
-.spotifybar{
-    padding: 10px 0; display: flex; justify-content: center;
-    background: rgba(0,0,0,0.1); z-index: 10;
-}
-.spotifybar iframe{ 
-    width: 320px; height: 80px; border:none; border-radius:18px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-.app{
-    flex:1; display:flex; align-items:center; justify-content:center; 
-    padding:10px; padding-bottom: 90px;
-}
-
+.spotifybar{ padding: 10px 0; display: flex; justify-content: center; background: rgba(0,0,0,0.1); z-index: 10; }
+.spotifybar iframe{ width: 335px; height: 80px; border:none; border-radius:18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.app{ flex:1; display:flex; align-items:center; justify-content:center; padding:10px; padding-bottom: 90px; }
 .card{
-width:100%; max-width:390px;
-background:rgba(0,0,0,.22); backdrop-filter:blur(18px);
-border-radius:30px; padding:20px; box-shadow:0 25px 50px rgba(0,0,0,0.4);
-position: relative; transition: 0.3s;
+width:100%; max-width:390px; background:rgba(255,255,255,.1); backdrop-filter:blur(18px);
+border-radius:30px; padding:20px; box-shadow:0 25px 50px rgba(0,0,0,0.25);
+position: relative; transition: 0.3s; color: var(--text);
 }
-
-h1{text-align:center; margin:0 0 10px 0; font-size:1.2rem;}
-
-.view-container { transition: opacity 0.4s ease; animation: slideUp 0.5s ease-out; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.timer-frame{ padding:5px; border-radius:18px; background:var(--frame); margin:10px 0; transition: 0.8s; }
-.countdown{ text-align:center; font-size:1.6rem; font-weight:bold; background:rgba(0,0,0,.35); border-radius:14px; padding:12px; }
-
-/* RGB MODLARI */
+h1{text-align:center; margin:0 0 10px 0; font-size:1.2rem; color: var(--text);}
+.timer-frame{ padding:5px; border-radius:20px; background:var(--frame); margin:10px 0; transition: 0.8s; }
+.countdown{ text-align:center; font-size:1.6rem; font-weight:bold; background:rgba(0,0,0,.15); border-radius:15px; padding:12px; color: var(--text); }
 body.rgb.exam-mode .timer-frame{ background:var(--led); background-size:400% 100%; animation:led 4s linear infinite; }
 @keyframes led{ 0%{background-position:0%} 100%{background-position:400%} }
 #rgbBtn { display: none; }
 body.rgb #rgbBtn { display: flex; }
-
-/* ÇALIŞMA MODU */
+.fs-btn {
+    position: fixed; left: 15px; bottom: 85px; width: 45px; height: 45px;
+    border-radius: 50%; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), rgba(255,255,255,0.3));
+    color: white; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1100; transition: 0.3s;
+}
 #studyView { display: none; text-align: center; }
 .stimer { font-size: 3rem; font-weight: bold; margin: 10px 0; font-family: monospace; color: var(--accent); }
 .study-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.study-btns button { padding:12px; border:none; border-radius:12px; background:var(--accent); color:#000; font-weight:bold; cursor:pointer; font-size: 0.85rem; }
+.study-btns button { padding:12px; border:none; border-radius:12px; background:var(--accent); color:white; font-weight:bold; cursor:pointer; }
+.controls{display:flex; justify-content:center; flex-wrap: wrap; gap:8px; margin-top:15px;}
+.controls button{ width:34px; height:34px; border:none; border-radius:50%; background:rgba(0,0,0,0.1); cursor:pointer; }
+.tabbar{ position: fixed; bottom: 0; left: 0; right: 0; display:flex; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); padding: 15px 10px; gap: 8px; z-index: 1000; }
+.tabbar button{ flex:1; padding:12px; border:none; border-radius:15px; background:rgba(255,255,255,0.1); color:white; font-weight:bold; opacity: 0.5; transition: 0.3s; }
+.tabbar button.active{ background:var(--accent); color:white; opacity: 1; transform: translateY(-3px); }
 
-.controls{display:flex; justify-content:center; gap:10px; margin-top:15px;}
-.controls button{ width:36px; height:36px; border:none; border-radius:50%; background:rgba(255,255,255,0.1); color:var(--text); cursor:pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;}
-
-/* ALT BAR */
-.tabbar{ position: fixed; bottom: 0; left: 0; right: 0; display:flex; background: rgba(0,0,0,0.75); backdrop-filter: blur(15px); padding: 12px; gap: 8px; z-index: 1000; }
-.tabbar button{ flex:1; padding:12px; border:none; border-radius:15px; background:rgba(255,255,255,0.05); color:var(--text); font-weight:bold; transition: 0.3s; opacity: 0.6; }
-.tabbar button.active{ background:var(--accent); color:#000; opacity: 1; transform: translateY(-3px); }
-
-/* YATAY MOD (LANDSCAPE) FİX */
-@media (orientation: landscape) and (max-height: 500px) {
-    .spotifybar { padding: 5px 0; }
-    .spotifybar iframe { height: 60px; width: 300px; }
-    .app { padding-bottom: 70px; }
-    .card { max-width: 500px; padding: 10px 20px; border-radius: 20px; }
-    h1 { margin: 0; font-size: 1rem; }
-    .stimer { font-size: 2.2rem; margin: 5px 0; }
-    .timer-frame { margin: 5px 0; }
-    .countdown { font-size: 1.2rem; padding: 8px; }
-    .quote, .hapbar, .stats-bar { display: none; } /* Yatayda yer kazanmak için gizle */
-    .study-btns { grid-template-columns: repeat(4, 1fr); }
-    .controls { margin-top: 5px; }
-}
-
-/* TEMALAR */
 body.night{--bg1:#0F172A;--bg2:#1E293B;--text:#CBD5E1;--accent:#38BDF8;--frame:#38BDF8}
 body.coffee{--bg1:#2B2A2A;--bg2:#3E3B3B;--text:#E6D5B8;--accent:#C58940;--frame:#C58940}
+body.soft{--bg1:#1C1F26;--bg2:#2A2E37;--text:#EAEAEA;--accent:#7AA2FF;--frame:#7AA2FF}
+body.mint{--bg1:#E8F3F1;--bg2:#2C6975;--text:#0B3C49;--accent:#2C6975;--frame:#FFC75F}
 body.rgb{--bg1:#050505;--bg2:#000;--text:#EFFFFF;--frame:transparent}
-body.soft{--bg1:#1C1F26;--bg2:#2A2E37;--text:#EAEA;--accent:#7AA2FF;--frame:#7AA2FF}
+body.mode1 {--led: linear-gradient(90deg,#ff004c,#00fff7,#7c7cff,#ff004c)}
+body.mode2 {--led: linear-gradient(90deg,#00c6ff,#0072ff,#00c6ff)}
+body.mode3 {--led: linear-gradient(90deg,#ff0033,#ff6600,#ff0033)}
+body.mode4 {--led: linear-gradient(90deg,#8f00ff,#d400ff,#8f00ff)}
 </style>
 </head>
 <body class="exam-mode">
 
-<div class="spotifybar">
-    <iframe src="https://open.spotify.com/playlist/0vvXsWCC9xrXsKd4FyS8kM?si=tcVusc_kQHKd2XthTO0PzA&pi=7V1_xn_aSFubL" allow="encrypted-media"></iframe>
-</div>
+<button class="fs-btn" onclick="toggleFS()">⛶</button>
+<div class="spotifybar"><iframe src="Https://open.spotify.com/playlist/0vvXsWCC9xrXsKd4FyS8kM?si=tcVusc_kQHKd2XthTO0PzA&pi=7V1_xn_aSFubL" allow="encrypted-media"></iframe></div>
 
 <div class="app">
     <div class="card">
         <h1 id="title">TYT 2026</h1>
-
-        <div id="examView" class="view-container">
-            <div class="timer-frame">
-                <div class="countdown" id="countdown">00g 00s 00d 00sn</div>
-            </div>
-            <div class="quote" id="quote"></div>
-            <div class="hapbar" id="info"></div>
+        <div id="examView">
+            <div class="timer-frame"><div class="countdown" id="countdown">00g 00s 00d 00sn</div></div>
+            <div id="quote" style="text-align:center; font-style:italic; margin-top:10px; font-size:0.9rem;"></div>
         </div>
-
-        <div id="studyView" class="view-container">
+        <div id="studyView">
             <div class="stimer" id="stimer">25:00</div>
             <div class="study-btns">
-                <button onclick="startStudy(25)">25 Dk</button>
-                <button onclick="startStudy(40)">40 Dk</button>
-                <button id="resumeBtn" onclick="resumeStudy()" style="display:none; background:#2ecc71">Devam Et</button>
-                <button id="stopBtn" onclick="pauseStudy()" style="background:#ff4757">Durdur</button>
-                <button onclick="resetStudyS()" style="background:#7f8c8d">Sıfırla</button>
+                <button onclick="startS(25)">25 Dk</button>
+                <button onclick="startS(40)">40 Dk</button>
+                <button id="resBtn" onclick="resumeS()" style="display:none; background:#2ecc71">Devam Et</button>
+                <button id="paBtn" onclick="pauseS()" style="background:#ff4757">Durdur</button>
+                <button onclick="resetS()" style="background:#7f8c8d">Sıfırla</button>
             </div>
         </div>
-
-        <div class="stats-bar" id="statsBar" style="text-align:center; font-size:0.75rem; margin-top:10px; opacity:0.6;">Bugün: 0 dk</div>
-
+        <div id="statsBar" style="text-align:center; font-size:0.8rem; margin-top:15px; font-weight:bold;">Bugün: 0 dk</div>
         <div class="controls">
-            <button onclick="setTheme('')">🎨</button>
-            <button onclick="setTheme('night')">🌙</button>
-            <button onclick="setTheme('rgb')">🌈</button>
+            <button onclick="setT('')">🎨</button>
+            <button onclick="setT('night')">🌙</button>
+            <button onclick="setT('coffee')">☕</button>
+            <button onclick="setT('soft')">📘</button>
+            <button onclick="setT('mint')">🍃</button>
+            <button onclick="setT('rgb')">🌈</button>
             <button id="rgbBtn" onclick="nextRGB()">⚡</button>
-            <button onclick="toggleFullScreen()">⛶</button>
         </div>
     </div>
 </div>
 
 <div class="tabbar">
-    <button id="tabtyt" class="active" onclick="switchTab('tyt')">TYT</button>
-    <button id="tabstudy" onclick="switchTab('study')">ÇALIŞMA</button>
-    <button id="tabayt" onclick="switchTab('ayt')">AYT</button>
+    <button id="tabtyt" class="active" onclick="switchT('tyt')">TYT</button>
+    <button id="tabstudy" onclick="switchT('study')">ÇALIŞMA</button>
+    <button id="tabayt" onclick="switchT('ayt')">AYT</button>
 </div>
 
 <script>
 const dates={tyt:new Date("2026-06-20T10:15:00").getTime(), ayt:new Date("2026-06-21T10:15:00").getTime()};
 const quotes=["Sessiz çalış, süre seninle olsun.","Netler her gün birikir.","Zorluklar başarıyı değerli kılar."];
-
-let current="tyt", rgbMode=1, studyInterval, remainSeconds=0, todayWork=parseInt(localStorage.getItem("todayWork")||"0");
+let cur="tyt", rgbM=1, sInt, remS=0, lastMins=0, todayW=parseInt(localStorage.getItem("todayW")||"0");
 
 function init(){
+    setInterval(updateET, 1000); updateET();
     updateStats();
-    const saved=localStorage.getItem("theme");
-    if(saved) setTheme(saved);
-    setInterval(updateExamTimer, 1000);
-    updateExamTimer();
     document.getElementById("quote").innerText = `"${quotes[new Date().getDate()%quotes.length]}"`;
+    const s = localStorage.getItem("theme"); if(s) setT(s);
 }
 
-function updateExamTimer(){
-    if(current === 'study') return;
-    const diff = dates[current] - Date.now();
+function updateET(){
+    if(cur==='study') return;
+    const diff = dates[cur]-Date.now();
     const d=Math.floor(diff/86400000), h=Math.floor(diff/3600000)%24, m=Math.floor(diff/60000)%60, s=Math.floor(diff/1000)%60;
     document.getElementById("countdown").innerText=`${d}g ${h}s ${m}d ${s}sn`;
 }
 
-function switchTab(t){
-    if(current === t) return;
-    current = t;
-    const isStudy = (t === 'study');
-    document.body.classList.toggle("exam-mode", !isStudy);
-    document.getElementById("examView").style.display = isStudy ? 'none' : 'block';
-    document.getElementById("studyView").style.display = isStudy ? 'block' : 'none';
-    document.getElementById("title").innerText = isStudy ? "ODAKLAN" : t.toUpperCase() + " 2026";
-    document.querySelectorAll(".tabbar button").forEach(b => b.classList.remove("active"));
+function updateStats(){ document.getElementById("statsBar").innerText = `Bugün: ${todayW} dk`; }
+
+function switchT(t){
+    cur=t; const isS = (t==='study');
+    document.body.classList.toggle("exam-mode", !isS);
+    document.getElementById("examView").style.display = isS?'none':'block';
+    document.getElementById("studyView").style.display = isS?'block':'none';
+    document.getElementById("title").innerText = isS?"ODAKLAN":t.toUpperCase()+" 2026";
+    document.querySelectorAll(".tabbar button").forEach(b=>b.classList.remove("active"));
     document.getElementById("tab"+t).classList.add("active");
 }
 
-/* ÇALIŞMA MODU MANTIĞI */
-function startStudy(mins){
-    clearInterval(studyInterval);
-    remainSeconds = mins * 60;
-    resumeStudy();
-}
+function startS(m){ clearInterval(sInt); remS=m*60; lastMins=m; resumeS(); }
+function pauseS(){ clearInterval(sInt); document.getElementById("resBtn").style.display="inline-block"; document.getElementById("paBtn").style.display="none"; }
 
-function pauseStudy(){
-    clearInterval(studyInterval);
-    document.getElementById("resumeBtn").style.display = "inline-block";
-    document.getElementById("stopBtn").style.display = "none";
-}
-
-function resumeStudy(){
-    document.getElementById("resumeBtn").style.display = "none";
-    document.getElementById("stopBtn").style.display = "inline-block";
-    studyInterval = setInterval(() => {
-        if(remainSeconds <= 0){
-            clearInterval(studyInterval);
-            alert("Seans bitti!");
-            todayWork += 25; // Örnek ekleme
-            localStorage.setItem("todayWork", todayWork);
+function resumeS(){
+    document.getElementById("resBtn").style.display="none"; document.getElementById("paBtn").style.display="inline-block";
+    sInt=setInterval(()=>{ 
+        if(remS<=0){
+            clearInterval(sInt); 
+            todayW += lastMins; 
+            localStorage.setItem("todayW", todayW);
             updateStats();
+            alert("Harika! " + lastMins + " dakikalık seans tamamlandı."); 
             return;
-        }
-        remainSeconds--;
-        updateStudyDisplay();
-    }, 1000);
+        } 
+        remS--; updateSD(); 
+    },1000);
 }
 
-function resetStudyS(){
-    clearInterval(studyInterval);
-    remainSeconds = 1500;
-    updateStudyDisplay();
-    document.getElementById("resumeBtn").style.display = "none";
-    document.getElementById("stopBtn").style.display = "inline-block";
+function resetS(){ clearInterval(sInt); remS=1500; updateSD(); pauseS(); }
+function updateSD(){
+    const m=Math.floor(remS/60), s=remS%60;
+    document.getElementById("stimer").innerText=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
 }
 
-function updateStudyDisplay(){
-    const m=Math.floor(remainSeconds/60), s=remainSeconds%60;
-    document.getElementById("stimer").innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-}
-
-function updateStats(){ document.getElementById("statsBar").innerText = `Bugün: ${todayWork} dk`; }
-
-/* FULLSCREEN */
-function toggleFullScreen() {
-  if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-  } else {
-    if (document.exitFullscreen) { document.exitFullscreen(); }
-  }
-}
-
-function setTheme(t){ 
-    const isExam = document.body.classList.contains("exam-mode");
+function setT(t){
+    const isE = document.body.classList.contains("exam-mode");
     document.body.className = t;
-    if(isExam) document.body.classList.add("exam-mode");
-    if(t === 'rgb') document.body.classList.add("mode" + rgbMode);
+    if(isE) document.body.classList.add("exam-mode");
+    if(t==='rgb') document.body.classList.add("mode"+rgbM);
     localStorage.setItem("theme", t);
 }
 
 function nextRGB(){
     if(!document.body.classList.contains("rgb")) return;
-    document.body.classList.remove("mode" + rgbMode);
-    rgbMode = rgbMode % 4 + 1;
-    document.body.classList.add("mode" + rgbMode);
+    document.body.classList.remove("mode"+rgbM);
+    rgbM = rgbM%4+1;
+    document.body.classList.add("mode"+rgbM);
+}
+
+function toggleFS(){
+    if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
 }
 
 init();
