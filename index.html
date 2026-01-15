@@ -1,1 +1,90 @@
+<!DOCTYPE html><html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TYT / AYT Study App</title><!-- PWA --><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#215E61">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>
+:root{
+--bg1:#F5FBE6;--bg2:#215E61;--text:#0B3C49;--accent:#FE7F2D;
+}
+body{margin:0;height:100vh;font-family:Arial;background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--text);display:flex;flex-direction:column}
+.app{flex:1;display:flex;align-items:center;justify-content:center}
+.card{width:92%;max-width:420px;background:rgba(255,255,255,.2);backdrop-filter:blur(14px);border-radius:22px;padding:20px}
+.timer{font-size:1.6rem;text-align:center;font-weight:bold;margin:12px 0}
+.controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.controls button{padding:8px 12px;border:none;border-radius:12px;background:var(--accent);font-weight:bold}
+.modebar{display:flex;gap:6px;margin-top:10px}
+.modebar button{flex:1;border:none;padding:8px;border-radius:10px;background:#00000022}
+.active{background:var(--accent)!important}
+.spotify{margin-top:12px;border-radius:16px;overflow:hidden}
+</style></head>
+<body><div class="app">
+<div class="card">
+<h2 id="title" style="text-align:center">TYT 2026</h2>
+<div class="timer" id="timer">--</div><div class="modebar">
+<button onclick="switchMain('tyt')" class="active" id="btyt">TYT</button>
+<button onclick="switchMain('ayt')" id="bayt">AYT</button>
+</div><hr><h3 style="text-align:center">Çalışma Modu</h3>
+<div class="controls">
+<button onclick="startPomodoro()">Pomodoro</button>
+<button onclick="startDeneme('tyt')">TYT Deneme</button>
+<button onclick="startDeneme('ayt')">AYT Deneme</button>
+<button onclick="stopTimer()">Durdur</button>
+</div><div class="spotify">
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8Uebhn9wzrS" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe>
+</div>
+</div>
+</div><script>
+let interval;
+let target;
+let mode="tyt";
+const dates={tyt:new Date('2026-06-20T10:15:00'),ayt:new Date('2026-06-21T10:15:00')};
 
+function updateCountdown(){
+ const diff=target-Date.now();
+ if(diff<=0){timer.innerText="BİTTİ";clearInterval(interval);return}
+ const d=Math.floor(diff/86400000);
+ const h=Math.floor(diff/3600000)%24;
+ const m=Math.floor(diff/60000)%60;
+ const s=Math.floor(diff/1000)%60;
+ timer.innerText=`${d}g ${h}s ${m}d ${s}sn`;
+}
+
+function switchMain(t){
+ mode=t;
+ document.getElementById('btyt').classList.toggle('active',t==='tyt');
+ document.getElementById('bayt').classList.toggle('active',t==='ayt');
+ title.innerText=t==='tyt'?'TYT 2026':'AYT 2026';
+ target=dates[t];
+ clearInterval(interval);
+ interval=setInterval(updateCountdown,1000);
+ updateCountdown();
+}
+
+function startPomodoro(){
+ clearInterval(interval);
+ let time=25*60;
+ interval=setInterval(()=>{
+  if(time<=0){alert('Pomodoro bitti');clearInterval(interval);return}
+  time--;timer.innerText=`${Math.floor(time/60)}:${(time%60).toString().padStart(2,'0')}`;
+ },1000);
+}
+
+function startDeneme(t){
+ clearInterval(interval);
+ let time=t==='tyt'?165*60:180*60;
+ interval=setInterval(()=>{
+  if(time<=0){alert('Deneme bitti');clearInterval(interval);return}
+  time--;timer.innerText=`${Math.floor(time/60)}:${(time%60).toString().padStart(2,'0')}`;
+ },1000);
+}
+
+function stopTimer(){clearInterval(interval);}
+
+switchMain('tyt');
+
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}
+</script></body>
+</html>
