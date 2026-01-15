@@ -110,7 +110,6 @@ const saved=localStorage.getItem("theme"); if(saved) document.body.className=sav
 setInterval(update,1000); update(); daily();
 
 function toggleStudyMode(){studyMode=!studyMode; studyBar.classList.toggle("hidden",!studyMode); timerFrame.classList.toggle("hidden",studyMode); quoteEl.classList.toggle("hidden",studyMode); infoEl.classList.toggle("hidden",studyMode); stopPomodoro();}
-
 function startPomodoro(mins){stopPomodoro(); let endTime=Date.now()+mins*60*1000; pomodoroInterval=setInterval(()=>{let diff=endTime-Date.now(); if(diff<=0){stopPomodoro(); playSound(); todayWork+=mins; localStorage.setItem("todayWork",todayWork); updateStats(); return;} let m=Math.floor(diff/60000); let s=Math.floor(diff/1000)%60; countdown.innerText=`Pomodoro: ${m} dk ${s} sn`;},1000);}
 function stopPomodoro(){clearInterval(pomodoroInterval); update();}
 function startDeneme(type){stopPomodoro(); let dur=60; countdown.innerText=`${type.toUpperCase()} Deneme Modu Başladı!`; pomodoroInterval=setInterval(()=>{dur--; if(dur<=0){stopPomodoro(); playSound(); todayWork+=60; localStorage.setItem("todayWork",todayWork); updateStats(); return;} countdown.innerText=`${type.toUpperCase()} Deneme: ${dur} dk`;},60000);}
