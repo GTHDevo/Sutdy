@@ -17,9 +17,13 @@ color:var(--text); display:flex; flex-direction:column;
 overflow:hidden; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* SPOTIFY BAR - GitHub Fix */
-.spotifybar{ padding: 10px 0; display: flex; justify-content: center; background: rgba(0,0,0,0.1); z-index: 10; }
-.spotifybar iframe{ width: 340px; height: 80px; border:none; border-radius:18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+/* SPOTIFY BAR - FIXED EMBED */
+.spotifybar{
+  padding: 10px 0; display: flex; justify-content: center; background: rgba(0,0,0,0.1); z-index: 10;
+}
+.spotifybar iframe{
+  width: 340px; height: 80px; border:none; border-radius:18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
 
 .app{ flex:1; display:flex; align-items:center; justify-content:center; padding:10px; padding-bottom: 95px; }
 
@@ -83,8 +87,14 @@ body.mode4 {--led: linear-gradient(90deg,#8f00ff,#d400ff,#8f00ff)}
 
 <button class="fs-btn" onclick="toggleFS()">⛶</button>
 
+<!-- SPOTIFY BAR -->
 <div class="spotifybar">
-    <iframe src="Https://open.spotify.com/embed/playlist/0vvXsWCC9xrXsKd4FyS8k" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe 
+        src="https://open.spotify.com/embed/playlist/0vvXsWCC9xrXsKd4FyS8kM" 
+        width="340" height="80" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy">
+    </iframe>
 </div>
 
 <div class="app">
@@ -124,6 +134,7 @@ body.mode4 {--led: linear-gradient(90deg,#8f00ff,#d400ff,#8f00ff)}
 </div>
 
 <script>
+// --- JS Kodlar (aynı önceki versiyon) ---
 const dates={tyt:new Date("2026-06-20T10:15:00").getTime(), ayt:new Date("2026-06-21T10:15:00").getTime()};
 const quotes=["Sessiz çalış, zaferin ses getirsin.","Netler sabırla birikir.","Zorluklar başarıyı değerli kılar."];
 let cur="tyt", rgbM=1, sInt, remS=0, lastMins=0, todayW=parseInt(localStorage.getItem("todayW")||"0");
@@ -192,4 +203,3 @@ init();
 </script>
 </body>
 </html>
-
