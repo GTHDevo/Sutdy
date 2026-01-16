@@ -1,12 +1,10 @@
 {
   "name": "FocusYKS",
   "short_name": "FocusYKS",
-  "description": "TYT & AYT sayaç, pomodoro ve deneme odaklı çalışma uygulaması",
-  "start_url": "./index.html",
+  "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#215E61",
+  "background_color": "#F5FBE6",
   "theme_color": "#215E61",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "icons/icon-192.png",
